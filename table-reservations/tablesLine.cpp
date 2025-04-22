@@ -1,5 +1,6 @@
 #include "tablesLine.h"
 #include <sstream>
+#include <iostream>
 
 tablesLine::tablesLine(string s) {
 	setLineType(genericLine::tables);
@@ -24,6 +25,6 @@ void tablesLine::addTable(int t) {
 
 void tablesLine::printTables() const {
 	for (int i = 0; i < tables.size(); i++) {
-		cout << "Table " << i + 1 << ": " << tables[i] << endl;
+		std::cout << "Table " << i + 1 << ": " << tables[i] << endl;
 	}
 }
