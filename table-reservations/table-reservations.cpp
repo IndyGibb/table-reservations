@@ -159,6 +159,15 @@ int main()
 		tableObjects.push_back(Table(tables.getTables()[i]));
 	}
 
+    vector<Group> groups;
+    Group* g;
+	while (getline(fin, line)) {
+		groupLine group(line);
+		g = new Group(group.getPartyName(), group.getPartySize(), group.getDiningTime());
+		groups.push_back(*g);
+        delete g;
+	}
+
     /*
     const int max_types = 2;
     const int table_types[] = { 2, 4 };  // how many people may be seated at a table
