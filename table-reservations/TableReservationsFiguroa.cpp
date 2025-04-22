@@ -1,6 +1,6 @@
 // TableReservations.cpp : This program tries to assign tables to various parties
 // seeking to dine at a restaurant.
-
+/*
 #include <iostream>
 using namespace std;
 
@@ -132,3 +132,4 @@ int main()
 
     return 0;
 }
+*/

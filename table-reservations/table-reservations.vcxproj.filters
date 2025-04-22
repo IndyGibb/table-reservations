@@ -21,5 +21,19 @@
     <ClCompile Include="TableReservationsFiguroa.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="genericLine.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="tablesLine.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="genericLine.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="tablesLine.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
