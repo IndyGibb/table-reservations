@@ -6,8 +6,11 @@ class tablesLine :
     public genericLine
 {
 public:
-    tablesLine();
+    tablesLine(string);
+    void newTables(string);
+	void addTable(int);
     vector<int> getTables() const { return tables; }
+    void printTables() const;
 private:
     vector<int> tables;
 };

@@ -23,6 +23,11 @@ int main()
 // seeking to dine at a restaurant.
 
 #include <iostream>
+#include <fstream>
+#include "Group.h"
+#include "Table.h"
+#include "groupLine.h"
+#include "tablesLine.h"
 using namespace std;
 
 const int max_tables = 6;
@@ -123,8 +128,36 @@ bool reserve_table(const int table[], int original_taken[], const int length,
 
 int main()
 {
+    string inputFileName, line;
+    cout << "Enter the name of the input file: ";
+    cin >> inputFileName;
+    ifstream fin(inputFileName);
+    while (!fin) {
+        cout << "Error opening file " << inputFileName << ".\nPlease enter a new file name, or q to quit: ";
+        cin >> inputFileName;
+		if (inputFileName == "q") {
+			cout << "Goodbye!\n";
+			return 0;
+        }
+        cout << endl;
+        fin.close();
+        fin.open(inputFileName);
+    }
+	cout << "File " << inputFileName << " opened successfully.\n";
 
+    getline(fin, line);
 
+    tablesLine tables(line);
+
+    cout << "Here are the table capacities:\n";
+
+    tables.printTables();
+    cout << endl;
+
+    vector<Table> tableObjects;
+	for (int i = 0; i < tables.getTables().size(); i++) {
+		tableObjects.push_back(Table(tables.getTables()[i]));
+	}
 
     /*
     const int max_types = 2;
