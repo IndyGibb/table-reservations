@@ -1,0 +1,6 @@
+2,4,2,4,6
+Taylor,5,80
+Anderson,3,45
+Moore,6,100
+Walker,2,60
+Young,7,120
