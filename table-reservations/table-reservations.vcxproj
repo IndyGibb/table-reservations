@@ -128,12 +128,18 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="genericLine.cpp" />
+    <ClCompile Include="Group.cpp" />
+    <ClCompile Include="groupLine.cpp" />
     <ClCompile Include="table-reservations.cpp" />
+    <ClCompile Include="Table.cpp" />
     <ClCompile Include="TableReservationsFiguroa.cpp" />
     <ClCompile Include="tablesLine.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="genericLine.h" />
+    <ClInclude Include="Group.h" />
+    <ClInclude Include="groupLine.h" />
+    <ClInclude Include="Table.h" />
     <ClInclude Include="tablesLine.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

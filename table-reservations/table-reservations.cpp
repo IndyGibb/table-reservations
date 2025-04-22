@@ -123,6 +123,10 @@ bool reserve_table(const int table[], int original_taken[], const int length,
 
 int main()
 {
+
+
+
+    /*
     const int max_types = 2;
     const int table_types[] = { 2, 4 };  // how many people may be seated at a table
     const int party_size_length = 5;  // there are 5 parties
@@ -150,6 +154,6 @@ int main()
         }
     }
     else { cout << "\nThe parties could not all be accommodated.\n"; }
-
+    */
     return 0;
 }

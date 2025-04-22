@@ -7,6 +7,7 @@ class tablesLine :
 {
 public:
     tablesLine();
+    vector<int> getTables() const { return tables; }
 private:
     vector<int> tables;
 };
