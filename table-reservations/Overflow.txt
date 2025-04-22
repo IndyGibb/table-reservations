@@ -1,0 +1,5 @@
+2,4,4
+Green,2,30
+Miller,4,60
+Baker,3,45
+Thompson,9,100
