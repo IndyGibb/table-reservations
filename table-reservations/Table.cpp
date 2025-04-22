@@ -1,23 +1,30 @@
 #include "Table.h"
 
-Table::Table(int cap) : capacity(cap), assignedPartyIndex(-1) {}
+// Constructor: initializes the table with the given capacity
+// and marks it as unassigned (assignedGroup is empty)
+Table::Table(int cap) : capacity(cap), assignedGroup("") {}
 
+// Returns the number of people the table can seat
 int Table::getCapacity() const {
     return capacity;
 }
 
-int Table::getAssignedPartyIndex() const {
-    return assignedPartyIndex;
+// Returns the name of the group currently assigned to this table
+std::string Table::getAssignedGroup() const {
+    return assignedGroup;
 }
 
+// Returns true if the table is unassigned (available)
 bool Table::isAvailable() const {
-    return assignedPartyIndex < 0;
+    return assignedGroup.empty();
 }
 
-void Table::assignToParty(int partyIndex) {
-    assignedPartyIndex = partyIndex;
+// Assigns this table to the specified group
+void Table::assignToGroup(const std::string& groupName) {
+    assignedGroup = groupName;
 }
 
+// Clears the current assignment, making the table available again
 void Table::clearAssignment() {
-    assignedPartyIndex = -1;
+    assignedGroup.clear();
 }
