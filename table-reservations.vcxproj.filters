@@ -54,4 +54,15 @@
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
+  <ItemGroup>
+    <Text Include="Basic.txt">
+      <Filter>Resource Files</Filter>
+    </Text>
+    <Text Include="MultipleTables.txt">
+      <Filter>Resource Files</Filter>
+    </Text>
+    <Text Include="Overflow.txt">
+      <Filter>Resource Files</Filter>
+    </Text>
+  </ItemGroup>
 </Project>

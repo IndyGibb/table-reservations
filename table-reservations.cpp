@@ -33,7 +33,7 @@ using namespace std;
 vector<Table> sortByTime(vector<Table> tables) {
     for (int i = 0; i < tables.size(); i++) {
         for (int j = i + 1; j < tables.size(); j++) {
-			if (tables[i].getParty()->getDiningTime() > tables[j].getParty()->getDiningTime()) {
+			if (tables[i].getAssignedGroup()->getDiningTime() > tables[j].getAssignedGroup()->getDiningTime()) {
 				// Swap tables[i] and tables[j] if they are out of order
 				Table temp = tables[i];
 				tables[i] = tables[j];
@@ -51,7 +51,7 @@ void next_party(vector<Table>& tables, vector<Group>& groups) {
         if (!groups[i].isSeated()) {
             for (int j = 0; j < tablesResorted.size(); j++) {
                 if (groups[i].getSize() <= tables[i].getCapacity()) {
-                    cout << "The next party " << groups[i].getName() << " of size " << groups[i].getSize() << " will be assigned to table " << j + 1 << " in " << tables[j].getAssignedPartyIndex()->getDiningTime() << " minutes.\n";
+                    cout << "The next party " << groups[i].getName() << " of size " << groups[i].getSize() << " will be assigned to table " << j + 1 << " in " << tables[j].getAssignedGroup()->getDiningTime() << " minutes.\n";
                     return;
                 }
             }
@@ -91,7 +91,7 @@ bool reserve_table(vector<Table>& tables, vector<Group>& groups) {
         // If a table for two was not found above, try assigning the party to a table for 4.
         for (int i = 0; i < groups.size(); i++) {
             if (tables[i].isAvailable() && nextParty->getSize() <= tables[i].getCapacity()) {
-                tables[i].assignToParty(nextParty);
+                tables[i].assignToGroup(nextParty);
 				nextParty->markSeated();
                 cout << "Your party of " << nextParty->getSize() << " is assigned to table " << i + 1 << endl;
                 // Ultimately, success depends on whether all other parties can be accommodated.
@@ -119,8 +119,8 @@ bool reserve_table(vector<Table>& tables, vector<Group>& groups) {
                     // The two tables, when put together, must seat the entire party.
                     if (tables[j].isAvailable() && j != assigned && tables[assigned].getCapacity() + tables[j].getCapacity() >= nextParty->getSize()) {
                         int also_assigned = j;
-						tables[assigned].assignToParty(nextParty);
-						tables[also_assigned].assignToParty(nextParty);
+						tables[assigned].assignToGroup(nextParty);
+						tables[also_assigned].assignToGroup(nextParty);
 						nextParty->markSeated();
                         cout << "Your party of " << nextParty->getSize() << " is assigned to tables " << assigned + 1
                             << " and " << also_assigned + 1 << endl;
@@ -205,8 +205,8 @@ int main()
 				cout << "Table " << i + 1 << " is not assigned to anyone.\n";
 			}
 			else {
-				cout << "Table " << i + 1 << " is assigned to party number " << tableObjects[i].getParty()->getName()
-					<< ", which is a party of size " << tableObjects[i].getParty()->getSize() << endl;
+				cout << "Table " << i + 1 << " is assigned to party number " << tableObjects[i].getAssignedGroup()->getName()
+					<< ", which is a party of size " << tableObjects[i].getAssignedGroup()->getSize() << endl;
 			}
 		}
 	}

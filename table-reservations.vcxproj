@@ -142,6 +142,11 @@
     <ClInclude Include="Table.h" />
     <ClInclude Include="tablesLine.h" />
   </ItemGroup>
+  <ItemGroup>
+    <Text Include="Basic.txt" />
+    <Text Include="MultipleTables.txt" />
+    <Text Include="Overflow.txt" />
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>
