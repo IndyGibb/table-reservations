@@ -44,7 +44,7 @@ vector<Table> sortByTime(vector<Table> tables) {
     return tables;
 }
 
-void nextParty(vector<Table>& tables, vector<Group>& groups) {
+void next_party(vector<Table>& tables, vector<Group>& groups) {
     vector<Table> tablesResorted = sortByTime(tables);
 	Group* nextParty = nullptr;
     for (int i = 0; i < groups.size(); i++) {
@@ -86,7 +86,7 @@ bool reserve_table(vector<Table>& tables, vector<Group>& groups) {
 
     cout << "Hello!  I see you have a party of " << nextParty->getSize() << endl;
 
-    if (nextParty->getSize() <= largestTable;) {
+    if (nextParty->getSize() <= largestTable) {
         // Parties of one or two people can only be assigned to a single table.
         // If a table for two was not found above, try assigning the party to a table for 4.
         for (int i = 0; i < groups.size(); i++) {
@@ -211,7 +211,7 @@ int main()
 		}
 	}
 	else {
-        cout << "\nThe parties could not all be accommodated.\n;
+        cout << "\nThe parties could not all be accommodated.\n";
         next_party(tableObjects, groups);
     }
 
