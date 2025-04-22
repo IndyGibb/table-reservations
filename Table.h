@@ -1,33 +1,26 @@
 #ifndef TABLE_H
 #define TABLE_H
 
-#include <string>
+#include "Group.h"
 
-// The Table class represents a single table in the restaurant.
-// Each table has a seating capacity and may be assigned to a group.
+// Represents a restaurant table with seating capacity and a pointer to an assigned Group
 class Table {
-private:
-    int capacity;              // The number of people this table can seat
-    std::string assignedGroup; // Name of the group assigned to this table (empty if unassigned)
-
 public:
-    // Constructor: creates a table with a specified capacity
-    Table(int cap);
+    // Constructor: initialize table with seating capacity
+    Table(int capacity);
 
-    // Returns the seating capacity of the table
-    int getCapacity() const;
+    // Getters
+    int getCapacity() const;             // Returns seating capacity
+    Group* getAssignedGroup() const;     // Returns the pointer to the assigned group
+    bool isAvailable() const;            // Returns true if the table is unassigned
 
-    // Returns the name of the group currently assigned to this table
-    std::string getAssignedGroup() const;
+    // Assignment operations
+    void assignToGroup(Group* groupPtr); // Assign a group to this table
+    void clearAssignment();              // Clears any current assignment
 
-    // Returns true if the table is currently unassigned (available)
-    bool isAvailable() const;
-
-    // Assigns the table to a group with the given name
-    void assignToGroup(const std::string& groupName);
-
-    // Clears any current group assignment from the table
-    void clearAssignment();
+private:
+    int capacity;           // Max number of people this table can seat
+    Group* assignedGroup;   // Pointer to the group currently assigned (nullptr if none)
 };
 
 #endif
