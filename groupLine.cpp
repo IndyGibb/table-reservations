@@ -12,7 +12,6 @@ void groupLine::newGroup(std::string s) {
 	std::string name;
 	int size, time;
 	std::getline(ss, name, ',');
-	ss.ignore();
 	ss >> size;
 	ss.ignore();
 	ss >> time;

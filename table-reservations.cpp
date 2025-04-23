@@ -47,12 +47,26 @@ vector<Table> sortByTime(vector<Table> tables) {
 void next_party(vector<Table>& tables, vector<Group>& groups) {
     vector<Table> tablesResorted = sortByTime(tables);
 	Group* nextParty = nullptr;
+    int longestTime;
     for (int i = 0; i < groups.size(); i++) {
         if (!groups[i].isSeated()) {
             for (int j = 0; j < tablesResorted.size(); j++) {
-                if (groups[i].getSize() <= tables[i].getCapacity()) {
+                if (groups[i].getSize() <= tables[j].getCapacity()) {
                     cout << "The next party " << groups[i].getName() << " of size " << groups[i].getSize() << " will be assigned to table " << j + 1 << " in " << tables[j].getAssignedGroup()->getDiningTime() << " minutes.\n";
                     return;
+                }
+            }
+            for (int j = 0; j < tablesResorted.size(); j++) {
+                int assigned = j;
+				longestTime = tablesResorted[j].getAssignedGroup()->getDiningTime();
+                for (int k = j + 1; k < tablesResorted.size(); k++) {
+					if (groups[i].getSize() <= tablesResorted[j].getCapacity() + tablesResorted[k].getCapacity()) {
+                        if (tablesResorted[k].getAssignedGroup()->getDiningTime() > longestTime) {
+                            longestTime = tablesResorted[k].getAssignedGroup()->getDiningTime();
+                        }
+						cout << "The next party " << groups[i].getName() << " of size " << groups[i].getSize() << " will be assigned to tables " << assigned + 1 << " and " << k + 1 << " in " << longestTime << " minutes.\n";
+						return;
+					}
                 }
             }
             
@@ -92,8 +106,7 @@ bool reserve_table(vector<Table>& tables, vector<Group>& groups) {
         for (int i = 0; i < groups.size(); i++) {
             if (tables[i].isAvailable() && nextParty->getSize() <= tables[i].getCapacity()) {
                 tables[i].assignToGroup(nextParty);
-				nextParty->markSeated();
-                cout << "Your party of " << nextParty->getSize() << " is assigned to table " << i + 1 << endl;
+                cout << "Party " << nextParty->getName() << " of size " << nextParty->getSize() << " is assigned to table " << i + 1 << endl;
                 // Ultimately, success depends on whether all other parties can be accommodated.
                 if (reserve_table(tables, groups)) {
                     // Copy the table assignments that worked out fine so the caller of this
@@ -103,7 +116,7 @@ bool reserve_table(vector<Table>& tables, vector<Group>& groups) {
                 else { return false; }
             }
         }
-        cout << "We don't have any tables available for your party of " << nextParty->getSize() << ".  Sorry!\n";
+        cout << "We don't have any tables available party " << nextParty->getName() << " of size " << nextParty->getSize() << ".  Sorry!\n";
         return false;
     }
 
@@ -121,20 +134,20 @@ bool reserve_table(vector<Table>& tables, vector<Group>& groups) {
                         int also_assigned = j;
 						tables[assigned].assignToGroup(nextParty);
 						tables[also_assigned].assignToGroup(nextParty);
-						nextParty->markSeated();
-                        cout << "Your party of " << nextParty->getSize() << " is assigned to tables " << assigned + 1
+                        cout << "Party " << nextParty->getName() << " of size " << nextParty->getSize() << " is assigned to tables " << assigned + 1
                             << " and " << also_assigned + 1 << endl;
                         if (reserve_table(tables, groups)) {
                             // Copy the table assignments that worked out fine so the caller of this
                             // function (which might be the main function) can see what they are.
                             return true;
                         }
+                        else { return false; }
                     }
                 }
             }
         }
 
-        cout << "We don't have any tables big enough for your party of " << nextParty->getSize() << ".  Sorry!\n";
+        cout << "We don't have any tables big enough for party " << nextParty->getName() << " of size " << nextParty->getSize() << ".  Sorry!\n";
         return false;
     }
 }
@@ -205,7 +218,7 @@ int main()
 				cout << "Table " << i + 1 << " is not assigned to anyone.\n";
 			}
 			else {
-				cout << "Table " << i + 1 << " is assigned to party number " << tableObjects[i].getAssignedGroup()->getName()
+				cout << "Table " << i + 1 << " is assigned to party " << tableObjects[i].getAssignedGroup()->getName()
 					<< ", which is a party of size " << tableObjects[i].getAssignedGroup()->getSize() << endl;
 			}
 		}
