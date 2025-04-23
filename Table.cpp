@@ -1,7 +1,7 @@
 #include "Table.h"
 
-Table::Table(int capacity)
-    : capacity(capacity), assignedGroup(nullptr) {}
+Table::Table(int capacity, int tableNumber)
+    : capacity(capacity), tableNumber(tableNumber), assignedGroup(nullptr) {}
 
 int Table::getCapacity() const {
     return capacity;
@@ -15,10 +15,18 @@ bool Table::isAvailable() const {
     return assignedGroup == nullptr;
 }
 
+int Table::getTableNumber() const {
+    return tableNumber;
+}
+
+void Table::setTableNumber(int number) {
+    tableNumber = number;
+}
+
 void Table::assignToGroup(Group* groupPtr) {
     assignedGroup = groupPtr;
     if (groupPtr != nullptr) {
-        groupPtr->markSeated();  // Mark the group as seated
+        groupPtr->markSeated();
     }
 }
 
