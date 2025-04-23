@@ -1,23 +1,4 @@
 // table-reservations.cpp : This file contains the 'main' function. Program execution begins and ends there.
-//
-/*
-#include <iostream>
-
-int main()
-{
-    std::cout << "Hello World!\n";
-}
-*/
-// Run program: Ctrl + F5 or Debug > Start Without Debugging menu
-// Debug program: F5 or Debug > Start Debugging menu
-
-// Tips for Getting Started: 
-//   1. Use the Solution Explorer window to add/manage files
-//   2. Use the Team Explorer window to connect to source control
-//   3. Use the Output window to see build output and other messages
-//   4. Use the Error List window to view errors
-//   5. Go to Project > Add New Item to create new code files, or Project > Add Existing Item to add existing code files to the project
-//   6. In the future, to open this project again, go to File > Open > Project and select the .sln file
 
 // TableReservations.cpp : This program tries to assign tables to various parties
 // seeking to dine at a restaurant.
@@ -91,6 +72,7 @@ void next_party(vector<Table>& tables, vector<Group>& groups) {
 bool reserve_table(vector<Table>& tables, vector<Group>& groups) {
     bool allSeated = true;
     Group* nextParty = nullptr;
+    // Find the first party that has not been seated, or end the program if all have been seated
     for (int i = 0; (i < groups.size()) && allSeated ; i++) {
         if (!groups[i].isSeated()) {
             allSeated = false;
@@ -101,6 +83,7 @@ bool reserve_table(vector<Table>& tables, vector<Group>& groups) {
 		cout << "All parties have been seated.";
 		return true;
 	}
+	// Find the largest table available for the next party
     int largestTable = 0;
 	for (int i = tables.size() - 1; i >= 0; i--) {
 		if (tables[i].isAvailable() && (tables[i].getCapacity() > largestTable)) {
@@ -112,31 +95,26 @@ bool reserve_table(vector<Table>& tables, vector<Group>& groups) {
     
 
     cout << "Hello!  I see you have a party of " << nextParty->getSize() << endl;
-
+    // Since the tables are sorted by size from smallest to largest, any given party will be put at the smallest table which can accomodate them.
     if (nextParty->getSize() <= largestTable) {
-        // Parties of one or two people can only be assigned to a single table.
-        // If a table for two was not found above, try assigning the party to a table for 4.
         for (int i = 0; i < groups.size(); i++) {
             if (tables[i].isAvailable() && nextParty->getSize() <= tables[i].getCapacity()) {
                 tables[i].assignToGroup(nextParty);
                 cout << "Party " << nextParty->getName() << " of size " << nextParty->getSize() << " is assigned to table " << tables[i].getTableNumber() << endl;
                 // Ultimately, success depends on whether all other parties can be accommodated.
                 if (reserve_table(tables, groups)) {
-                    // Copy the table assignments that worked out fine so the caller of this
-                    // function (which might be the main function) can see what they are.
                     return true;
                 }
                 else { return false; }
             }
         }
-        cout << "We don't have any tables available party " << nextParty->getName() << " of size " << nextParty->getSize() << ".  Sorry!\n";
+        cout << "We don't have any tables available for party " << nextParty->getName() << " of size " << nextParty->getSize() << ".  Sorry!\n";
         return false;
     }
 
     else {
         // Find a free table, regardless of size.
         for (int i = 0; i < tables.size(); i++) {
-            // Note that the if below is looking at the original table assignments.
             if (tables[i].isAvailable()) {
                 int assigned = i;
                 // Now find a second free table.
@@ -150,8 +128,6 @@ bool reserve_table(vector<Table>& tables, vector<Group>& groups) {
                         cout << "Party " << nextParty->getName() << " of size " << nextParty->getSize() << " is assigned to tables " << tables[assigned].getTableNumber()
                             << " and " << tables[also_assigned].getTableNumber() << endl;
                         if (reserve_table(tables, groups)) {
-                            // Copy the table assignments that worked out fine so the caller of this
-                            // function (which might be the main function) can see what they are.
                             return true;
                         }
                         else { return false; }
@@ -165,7 +141,7 @@ bool reserve_table(vector<Table>& tables, vector<Group>& groups) {
     }
 }
 
-void sort(vector<Table>& tables) {
+void sort(vector<Table>& tables) { // Sorts tables by capacity
     for (int i = 0; i < tables.size() - 1; i++) {
         for (int j = i + 1; j < tables.size(); j++) {
             if (tables[i].getCapacity() > tables[j].getCapacity()) {
@@ -199,7 +175,7 @@ int main()
 
     getline(fin, line);
 
-    tablesLine tables(line);
+    tablesLine tables(line); // Sifts through and puts the tables into a vector, as well as allowing easy printing capabilities.
 
     cout << "Here are the table capacities:\n";
 
@@ -208,7 +184,7 @@ int main()
 
     
 
-    vector<Table> tableObjects;
+    vector<Table> tableObjects; // Convert the vector of integers to a vector of Table objects
 	for (int i = 0; i < tables.getTables().size(); i++) {
 		tableObjects.push_back(Table(tables.getTables()[i]));
 		tableObjects[i].setTableNumber(i + 1);
@@ -216,10 +192,11 @@ int main()
 
     sort(tableObjects);
 
-    vector<Group> groups;
+	vector<Group> groups; // Vector of groups
     Group* g;
+    groupLine group(line);
 	while (getline(fin, line)) {
-		groupLine group(line);
+        group.newGroup(line);
 		g = new Group(group.getPartyName(), group.getPartySize(), group.getDiningTime());
 		groups.push_back(*g);
         delete g;
@@ -247,34 +224,6 @@ int main()
 
 
 
-    /*      
-    const int max_types = 2;
-    const int table_types[] = { 2, 4 };  // how many people may be seated at a table
-    const int party_size_length = 5;  // there are 5 parties
-    const int party_size[] = { 4,2,3,6,1 };
-    int table[max_tables], taken[max_tables];
-    for (int i = 0; i < max_tables; i++) {
-        table[i] = table_types[rand() % 2];
-        taken[i] = -1;  // a negative number means the given table is not taken
-    }
-    cout << "Here are the table capacities:\n";
-    for (int i = 0; i < max_tables; i++) {
-        cout << "Table " << i + 1 << " seats " << table[i] << " people.\n";
-    }
-
-    if (reserve_table(table, taken, max_tables, party_size, party_size_length)) {
-        cout << "\nHere are the final table assignments:\n";
-        for (int i = 0; i < max_tables; i++) {
-            if (taken[i] < 0) {
-                cout << "Table " << i + 1 << " is not assigned to anyone.\n";
-            }
-            else {
-                cout << "Table " << i + 1 << " is assigned to party number " << taken[i]
-                    << ", which is a party of size " << party_size[taken[i]] << endl;
-            }
-        }
-    }
-    else { cout << "\nThe parties could not all be accommodated.\n"; }
-    */
+    
     return 0;
 }
