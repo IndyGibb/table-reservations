@@ -3,24 +3,27 @@
 
 #include "Group.h"
 
-// Represents a restaurant table with seating capacity and a pointer to an assigned Group
+// Represents a restaurant table with capacity, assigned group, and table number
 class Table {
 public:
-    // Constructor: initialize table with seating capacity
-    Table(int capacity);
+    // Constructor: initialize with seating capacity and optional table number
+    Table(int capacity, int tableNumber = -1);
 
     // Getters
     int getCapacity() const;             // Returns seating capacity
-    Group* getAssignedGroup() const;     // Returns the pointer to the assigned group
-    bool isAvailable() const;            // Returns true if the table is unassigned
+    Group* getAssignedGroup() const;     // Returns pointer to the assigned group
+    bool isAvailable() const;            // Returns true if table is unassigned
+    int getTableNumber() const;          // Returns the table number
 
-    // Assignment operations
+    // Setters
     void assignToGroup(Group* groupPtr); // Assign a group to this table
-    void clearAssignment();              // Clears any current assignment
+    void clearAssignment();              // Clears current assignment
+    void setTableNumber(int number);     // Set the table number
 
 private:
     int capacity;           // Max number of people this table can seat
-    Group* assignedGroup;   // Pointer to the group currently assigned (nullptr if none)
+    int tableNumber;        // Unique number identifying this table
+    Group* assignedGroup;   // Pointer to assigned group (nullptr if unassigned)
 };
 
 #endif
